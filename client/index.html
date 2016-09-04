@@ -5,12 +5,23 @@
 	<title>TODO: Title goes here</title>
 	<meta name="author" content="Amanda Fry ">
 	<link rel="stylesheet" type="text/css" href="./css/AmandaTemplate.css">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="angular.js"></script>
+    <script src="./js/angular.js"></script>
+    <script src="./js/angular-route.js"></script>
+    <script src="./js/angular-messages.js"></script>
+    <script type="text/javascript" src="./services/surveyScript.js"></script>
 
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script> -->
     <script type="text/javascript">
         var myApp = angular.module('myApp', []);
     </script>
-
 </head>
 
 <body>	
@@ -26,6 +37,15 @@
             </div>
         </div><!-- end of header content-->
         <div class="maincontent">
+            <div ng-app='myApp'>
+                <div ng-view=''"></div>
+                <div ng-controller="usersController as UC">
+  <form name='loginForm'>
+    <label>Your Name:</label><input type="text" name="name" ng-model="UC.name">
+    <button ng-click="login()">Login</button>
+  </form>
+</div>
+            </div>
 
         </div><!-- end of main content-->
         <div class="footer">

@@ -2,7 +2,7 @@ var users = require('../controllers/users.js');
 var polls = require('../controllers/polls.js');
 
 module.exports = function(app){
-
+	//show the rout is typed in and what contorrler to call, example call users.show in users.js
 	app.get('/users', function(req, res){
 		users.show(req,res);
 	});
