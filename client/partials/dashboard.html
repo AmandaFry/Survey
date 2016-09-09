@@ -1,0 +1,27 @@
+<div style="float: right">
+  <a href="#/create">Create a New Poll</a> | 
+  <a ng-click='logout()'>Logout</a>
+</div><br>
+
+<h2>Hello, {{currentUser.name}}</h2>
+<h2>Current Polls:</h2><br>
+<input autofocus type="text" placeholder="Search" ng-model='filterer' style="float: right"></input><br>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Survey Question</th>
+      <th>Date Posted</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat='poll in polls | filter:filterer | orderBy:createdAt:true'>
+      <td ng-bind='poll.name'></td>
+      <td><a ng-bind='poll.question' ng-click='showOne(poll)'></a></td>
+      <td ng-bind='poll.createdAt | date:"MMMM d, y"'></td>
+      <td ng-if='poll.name == currentUser.name'><a ng-click='delete(poll)'>Delete</a></td>
+    </tr>
+  </tbody>
+</table>

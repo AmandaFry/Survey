@@ -9,7 +9,6 @@
 }
 
 	.header{
-		/*width:970px;*/
 		min-height: 100px;
 		border-top-right-radius: 8px;
 		border-top-left-radius: 8px;
@@ -37,13 +36,14 @@
 		background: linear-gradient(white, #ffe6cc);
 		min-height: 200px;
 		padding: 25px;
-		/*text-align: center;*/
 	}
-
+		.row {
+			display: block;
+			margin: 10px 0px 10px 20px;
+		}
 
 
 	.footer{
-		/*width:970px;*/
 		height: 100px:;
 		border-bottom-right-radius: 8px;
 		border-bottom-left-radius: 8px;

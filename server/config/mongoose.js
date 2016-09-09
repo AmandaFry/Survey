@@ -1,14 +1,18 @@
 // require the fs module for loading model files
 var fs = require('fs');
 
+
 // require mongoose
 var mongoose = require('mongoose');
 
 // require path for getting the models path
 var path = require('path');
 
+//gets read of the promise depricated error message
+// mongoose.Promise = global.Promise;
+
 // connect to mongoose!
-mongoose.connect('mongodb://localhost/surveyMean');
+mongoose.connect('mongodb://localhost/black_belt');
 
 // create a variable that points to the path where all of the models live
 var models_path = path.join(__dirname, './../models');

@@ -1,32 +1,32 @@
-var myApp = anglur.module('myApp', ['ngRoute', 'ngMessages']);
+var myApp = angular.module('myApp',['ngRoute']);
 
 myApp.config(function($routeProvider){
-	$routeProvider
-	.when('/',{
-		templateURL:'partial/login.html',
-		controller: 'loginController'
-	});
-	.when('/dashboard',{
-		templateURL: 'partial/dashboard.html',
-		controller: 'dashboardController'
-	});
-	.when('/polls/:id', {
-		templateURL:'partial/poll.html',
-		controller: 'pollController'
-	})
-	.when('/create',{
-		templateURL: 'partial/create.html',
-		controller: 'createController'
-	})
-	.otherwise({
-		redirectTo: '/'
-	})
+    $routeProvider
+        .when('/',{
+            templateUrl: 'partials/login.html',
+            controller: "loginController"
+        })
+        .when('/dashboard',{
+            templateUrl: 'partials/dashboard.html',
+            controller: "dashboardController"
+        })
+        .when('/polls/:id',{
+            templateUrl: 'partials/poll.html',
+            controller: "pollController"
+        })
+        .when('/create',{
+            templateUrl: 'partials/create.html',
+            controller: "createController"
+        })
+        .otherwise({
+            redirectTo: '/'
+        })
 });
 
 myApp.factory('userFactory', function($http){
-	var factory = {};
+    var factory = {};
 
-	factory.create = function(newUser,callback){
+    factory.create = function(newUser,callback){
         $http.post('/users/create',newUser).success(function(data){
             factory.currentUser = data;
             callback();
@@ -40,14 +40,28 @@ myApp.factory('userFactory', function($http){
     factory.logout = function(callback){
         factory.currentUser = {};
         callback(factory.currentUser);
-    };
+    }
 
-	return factory
+    return factory;
+});
+
+
+myApp.controller('loginController', function($scope,$location,userFactory){
+    $scope.login = function(){
+        if(!$scope.newUser)
+            alert("Name cannot be blank")
+        else{
+            userFactory.create($scope.newUser,function(){
+                $location.url('/dashboard');
+            });
+        }
+    };
 });
 
 
 myApp.factory('pollFactory', function($http){
     var factory = {};
+
 
     factory.show = function(callback){
         $http.get('/polls').success(function(data){
@@ -67,7 +81,7 @@ myApp.factory('pollFactory', function($http){
         $http.post('/polls/create',newPoll).success(function(data){
             factory.polls = data;
             callback();
-        });
+        })
     }
 
     factory.showCurrentPoll = function(callback){
@@ -89,18 +103,6 @@ myApp.factory('pollFactory', function($http){
     };
 
     return factory;
-})
-
-myApp.controller('loginController', function($scope,$location,userFactory){
-    $scope.login = function(){
-        if(!$scope.newUser)
-            alert("Name cannot be blank")
-        else{
-            userFactory.create($scope.newUser,function(){
-                $location.url('/dashboard');
-            });
-        }
-    };
 });
 
 myApp.controller('dashboardController', function($scope,$location,userFactory,pollFactory){
@@ -161,26 +163,25 @@ myApp.controller('createController', function($scope,$location,pollFactory,userF
     });
 
     $scope.create = function(){
+        console.log ("we are here")
         var error = false;
-        pollFactory.show(function(data){
-            $scope.polls = data;
-        });
+
         if(!$scope.newPoll || !$scope.newPoll.question || !$scope.newPoll.option1 || !$scope.newPoll.option2 || !$scope.newPoll.option3 || !$scope.newPoll.option4){
-            alert("No fields can be empty");
+            alert("Please fill in all fields");
             error = true;
         }
         for(i in $scope.polls){
             if($scope.polls[i].question==$scope.newPoll.question){
-                alert("No duplicate questions");
+                alert("Connot have duplicate questions");
                 error = true;
             }
         }
         if($scope.newPoll.question.length<8){
-            alert("Question must be at least 8 characters");
+            alert("Question must be at least 8 characters long");
             error = true;
         }
         if($scope.newPoll.option1.length<3 || $scope.newPoll.option2.length<3 || $scope.newPoll.option3.length<3 || $scope.newPoll.option4.length<3){
-            alert("All options must be at least 3 characters");
+            alert("All options must be at least 3 characters long");
             error = true;
         }
         if(!error){

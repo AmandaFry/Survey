@@ -16,6 +16,6 @@ app.use(bodyParser.json());
 require('./server/config/mongoose.js');
 require('./server/config/routes.js')(app);
 
-app.listen(8001, function(){
-	console.log('Listening on : 8001');
+app.listen(8010, function(){
+	console.log('Listening on : 8010');
 });
